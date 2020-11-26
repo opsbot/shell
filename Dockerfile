@@ -10,10 +10,13 @@ RUN sed -i 's|http://dl-cdn.alpinelinux.org|https://alpine.global.ssl.fastly.net
   echo "@community https://alpine.global.ssl.fastly.net/alpine/v3.12/community" >> /etc/apk/repositories && \
   echo "@testing https://alpine.global.ssl.fastly.net/alpine/edge/testing" >> /etc/apk/repositories
 
-# install zsh package
-RUN apk update \
-  && apk add --no-cache zsh \
-  && rm -f /tmp/* /etc/apk/cache/*
+# copy apk packages manifest
+COPY packages.txt /etc/apk/packages.txt
+
+# install apk packages from manifest
+RUN apk update && \
+  apk add --no-cache $(grep -v '^#' /etc/apk/packages.txt) && \
+  rm -f /tmp/* /etc/apk/cache/*
 
 # replace user login shells with zsh
 RUN sed -i -e "s/bin\/ash/bin\/zsh/" /etc/passwd
