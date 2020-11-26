@@ -12,5 +12,5 @@ deps: init
 build: deps
 	@make --no-print-directory docker:build
 
-run:
-	docker run -it ${DOCKER_IMAGE_NAME}
+run: build
+	docker run -it ${DOCKER_IMAGE_NAME} zsh
