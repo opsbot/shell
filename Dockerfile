@@ -6,7 +6,7 @@ WORKDIR /packages
 #
 # Install the select packages from the opsbots package manager image
 # Repo: <https://github.com/opsbots/packages>
-ARG PACKAGES="cfssl cfssljson gomplate"
+ARG PACKAGES="antibody cfssl cfssljson gomplate"
 ENV PACKAGES=${PACKAGES}
 # RUN make dist(packages aren't written to usr/local/bin)
 RUN mkdir -p /dist \
@@ -56,6 +56,8 @@ COPY packages.txt /etc/apk/packages.txt
 RUN apk update && \
   apk add --no-cache $(grep -v '^#' /etc/apk/packages.txt) && \
   rm -f /tmp/* /etc/apk/cache/*
+
+RUN ln -s /usr/bin/python3 /usr/bin/python
 
 # Copy dist folder from packages builder
 COPY --from=packages /dist/ /usr/local/bin/

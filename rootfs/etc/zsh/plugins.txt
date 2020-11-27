@@ -1,0 +1,15 @@
+# Fish-like autosuggestions for zsh
+# https://github.com/zsh-users/zsh-autosuggestions
+zsh-users/zsh-autosuggestions
+
+# Additional completion definitions for Zsh.
+# https://github.com/zsh-users/zsh-completions
+zsh-users/zsh-completions
+
+# ZSH port of Fish history search (up arrow)
+# https://github.com/zsh-users/zsh-history-substring-search
+zsh-users/zsh-history-substring-search
+
+# Fish shell like syntax highlighting for Zsh.
+# https://github.com/zsh-users/zsh-syntax-highlighting
+zsh-users/zsh-syntax-highlighting

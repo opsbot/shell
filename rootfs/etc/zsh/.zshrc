@@ -86,3 +86,14 @@ setopt HIST_REDUCE_BLANKS
 
 # Include more information about when the command was executed, etc
 setopt EXTENDED_HISTORY
+
+##############################################################################
+# Z Shell Plugins Configuration
+##############################################################################
+# https://github.com/unixorn/awesome-zsh-plugins#antibody
+source <(antibody init)
+
+while IFS= read -r line
+do
+  antibody bundle "$line"
+done <<< $(grep -v '^#' /etc/zsh/plugins.txt)
