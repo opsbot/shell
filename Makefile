@@ -11,7 +11,7 @@ deps: init
 	@exit 0
 
 build: deps
-	@make --no-print-directory docker:build
+	@ARGS="AWS_ACCOUNT_ID AWS_MFA_PROFILE AWS_DEFAULT_PROFILE AWS_REGION AWS_ROOT_ACCOUNT_ID S3FS_BUCKET S3FS_REGION" make --no-print-directory docker:build
 
 install: build
 	@docker run --rm $(DOCKER_IMAGE_NAME) | bash -s $(DOCKER_TAG) || (echo "Try: sudo make install"; exit 1)

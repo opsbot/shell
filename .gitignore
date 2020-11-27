@@ -1,3 +1,5 @@
 # ignore build harness files
 *build-harness
 
+# ignore vars file
+.vars
