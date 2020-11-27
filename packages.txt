@@ -1,9 +1,12 @@
 bash
+fzf-zsh-completion
 git
+man-db@community
 make
 openssh-client
 openssl
 python3
 syslog-ng
+variant@cloudposse
 zsh
 zsh-vcs

@@ -6,7 +6,7 @@ WORKDIR /packages
 #
 # Install the select packages from the opsbots package manager image
 # Repo: <https://github.com/opsbots/packages>
-ARG PACKAGES="antibody cfssl cfssljson direnv gomplate"
+ARG PACKAGES="antibody cfssl cfssljson direnv fzf gomplate pandoc"
 ENV PACKAGES=${PACKAGES}
 # RUN make dist(packages aren't written to usr/local/bin)
 RUN mkdir -p /dist \
@@ -70,6 +70,12 @@ COPY rootfs/ /
 
 # copy config files
 COPY conf/ /conf
+
+# copy documentation
+COPY docs/man/ /usr/share/docs/
+
+# build custom man pages
+RUN /usr/local/bin/docs update
 
 # replace user login shells with zsh
 RUN sed -i -e "s/bin\/ash/bin\/zsh/" /etc/passwd
