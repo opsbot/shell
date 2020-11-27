@@ -6,7 +6,7 @@ WORKDIR /packages
 #
 # Install the select packages from the opsbots package manager image
 # Repo: <https://github.com/opsbots/packages>
-ARG PACKAGES="antibody aws-vault cfssl cfssljson direnv fzf gomplate pandoc"
+ARG PACKAGES="antibody aws-vault cfssl cfssljson direnv fzf gomplate goofys pandoc"
 ENV PACKAGES=${PACKAGES}
 # RUN make dist(packages aren't written to usr/local/bin)
 RUN mkdir -p /dist \
@@ -30,6 +30,8 @@ RUN pip install --upgrade pip setuptools wheel && \
 #
 # OpsBot Shell Builder
 FROM alpine:3.12
+
+ENV AWS_REGION=us-west-2
 
 # set env var for shell
 ENV SHELL /bin/zsh
@@ -76,6 +78,9 @@ COPY docs/man/ /usr/share/docs/
 
 # build custom man pages
 RUN /usr/local/bin/docs update
+
+# Filesystem entry for tfstate
+RUN [ "${S3FS_BUCKET}" = "" ] || s3 fstab "${S3FS_BUCKET}" "/" "/s3fs"
 
 # replace user login shells with zsh
 RUN sed -i -e "s/bin\/ash/bin\/zsh/" /etc/passwd

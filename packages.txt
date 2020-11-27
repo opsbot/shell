@@ -1,6 +1,7 @@
 bash
 curl
 fzf-zsh-completion
+fuse
 git
 man-db@community
 make

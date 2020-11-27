@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# This script is used to mount filesystems from `/etc/fstab`
+
+die() {
+  local message="${1}"
+	echo "$message" >&2
+	exit 1
+}
+
+[ $commands[fusermount] ] || die "fuse package not installed"
+[ $commands[goofys] ] || die "goofys not installed"
+[ -w /dev/fuse ] || die "* FUSE not available; was container started with --privileged mode?"
+
+BUCKET="${1}"
+MOUNT="${2}"
+AWS_REGION="${S3FS_REGION:-${AWS_REGION}}"
+AWS_PROFILE="${AWS_VAULT:-default}"
+
+echo "######################################3"
+echo "BUCKET: ${BUCKET}"
+echo "MOUNT: ${MOUNT}"
+echo "AWS_REGION: ${AWS_REGION}"
+echo "AWS_PROFILE: ${AWS_PROFILE}"
+echo "######################################3"
+
+mountpoint -q "${MOUNT}" ||	exec goofys \
+    --profile=${AWS_PROFILE} \
+    --file-mode=0600 \
+    --dir-mode=0700 \
+    --region=${AWS_REGION} \
+    --acl=private \
+    ${BUCKET##s3://} \
+    ${MOUNT}
