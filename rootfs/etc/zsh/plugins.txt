@@ -1,3 +1,7 @@
+# a zshell plugin which integrates direnv
+# https://github.com/russelltsherman/zsh-direnv
+russelltsherman/zsh-direnv
+
 # Fish-like autosuggestions for zsh
 # https://github.com/zsh-users/zsh-autosuggestions
 zsh-users/zsh-autosuggestions

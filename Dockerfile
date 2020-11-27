@@ -6,7 +6,7 @@ WORKDIR /packages
 #
 # Install the select packages from the opsbots package manager image
 # Repo: <https://github.com/opsbots/packages>
-ARG PACKAGES="antibody cfssl cfssljson gomplate"
+ARG PACKAGES="antibody cfssl cfssljson direnv gomplate"
 ENV PACKAGES=${PACKAGES}
 # RUN make dist(packages aren't written to usr/local/bin)
 RUN mkdir -p /dist \
@@ -67,6 +67,9 @@ COPY --from=python /dist/ /usr/
 
 # copy root filesystem customizations
 COPY rootfs/ /
+
+# copy config files
+COPY conf/ /conf
 
 # replace user login shells with zsh
 RUN sed -i -e "s/bin\/ash/bin\/zsh/" /etc/passwd

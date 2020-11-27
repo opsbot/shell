@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+# Usage: use_tfenv [...]
+#
+# Load environment variables for a `terraform` project using `tfenv`.
+# Any arguments given will be passed to `tfenv`.
+#
+
+use_tfenv() {
+	# Export terraform environent
+	eval "$(tfenv)"
+}
