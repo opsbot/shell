@@ -34,6 +34,12 @@ FROM alpine:3.12
 # set env var for shell
 ENV SHELL /bin/zsh
 
+# This is not a "multi-user" system, so we'll use `/etc` as the global configuration dir
+# Read more: <https://wiki.archlinux.org/index.php/XDG_Base_Directory>
+ENV XDG_CONFIG_HOME=/etc
+# set zsh root dir in etc/zsh
+ENV ZDOTDIR /etc/zsh
+
 # add cloudposse apk repository
 ADD https://apk.cloudposse.com/ops@cloudposse.com.rsa.pub /etc/apk/keys/
 RUN echo "@cloudposse https://apk.cloudposse.com/3.12/vendor" >> /etc/apk/repositories
