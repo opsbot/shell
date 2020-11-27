@@ -97,3 +97,8 @@ while IFS= read -r line
 do
   antibody bundle "$line"
 done <<< $(grep -v '^#' /etc/zsh/plugins.txt)
+
+# load local condifuration stored in /etc/zsh.d
+for i in /etc/zsh.d/*; do
+  source $i
+done
