@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+
+export DOCKER_IMAGE="{{getenv "DOCKER_IMAGE" "opsbot/shell"}}"
+export DOCKER_TAG="{{getenv "DOCKER_TAG" "${1:-dev}"}}"
+export APP_NAME=${APP_NAME:-$(basename $DOCKER_IMAGE)}
+export INSTALL_PATH=${INSTALL_PATH:-/usr/local/bin}
+export INSTALLER_NAME="${APP_NAME}-installer"
+export OUTPUT=${OUTPUT:-/dev/null} # Replace with /dev/stdout to audit output
+export REQUIRE_PULL=${REQUIRE_PULL:-false}
+
+function die() {
+  local message="${1}"
+	echo "$message" >&2
+	exit 1
+}
+
+[ "${GEODESIC_SHELL}" == "true" ] && die "Installer cannot be run from inside a geodesic shell" >&2
+
+[ -z "${DOCKER_IMAGE}" ] && die "Docker image cannot be empty"
+
+[ -z "${DOCKER_TAG}" ] && DOCKER_TAG=latest
+
+[ $commands[tee] ] || die "Tee is required to install ${APP_NAME}" >&2
+
+[ $commands[docker] ] || die "Docker is required to run ${APP_NAME}"
+
+# -- unreachable code: template is created by calling a docker command
+docker ps >/dev/null 2>&1
+[ $? -ne 0 ] && die "Unable to communicate with docker daemon. Make sure your environment is properly configured and then try again." >&2
+
+[ -w "${INSTALL_PATH}" ] || die "Cannot write to ${INSTALL_PATH}. Please retry using sudo." 2>&1
+
+echo "# Installing ${APP_NAME} from ${DOCKER_IMAGE}:${DOCKER_TAG}..."
+if [ "${REQUIRE_PULL}" == "true" ]
+then
+	docker pull "${DOCKER_IMAGE}:${DOCKER_TAG}"
+	[ $? -ne 0 ] && "Failed to pull down ${DOCKER_IMAGE}:${DOCKER_TAG}"
+fi
+
+# remove the installer container if it is already running
+docker rm -f "${INSTALLER_NAME}" >/dev/null 2>&1
+
+# instanciate container calling wrapper script
+# write ourput of wrapper script to install path on host
+(
+  docker run --name "${INSTALLER_NAME}" --rm \
+    -e DOCKER_IMAGE \
+    -e DOCKER_TAG "${DOCKER_IMAGE}:${DOCKER_TAG}" \
+    /usr/local/bin/wrapper \
+ | tee "${INSTALL_PATH}/${APP_NAME}" > ${OUTPUT}
+) && chmod 755 "${INSTALL_PATH}/${APP_NAME}"
+
+if [ $? -eq 0 ]
+then
+	echo "# Installed ${APP_NAME} to ${INSTALL_PATH}/${APP_NAME}"
+	exit 0
+else
+	echo "# Failed to install ${APP_NAME}"
+	echo "# Please let us know! Send an email to < hello@opsbot.org > with what went wrong."
+	exit 1
+fi
