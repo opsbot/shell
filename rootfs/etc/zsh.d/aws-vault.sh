@@ -300,6 +300,9 @@ then
 			return 1
 		fi
 
+    # if mfa profile var is set autogenerate mfa token
+    [ -z "$AWS_MFA_PROFILE" ] || AWS_VAULT_ARGS+=("--mfa-token=$(mfa "$AWS_MFA_PROFILE")")
+
 		if [ "$DOCKER_TIME_DRIFT_FIX" = "true" ]
     then
 			sync_clocks
