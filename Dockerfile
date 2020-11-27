@@ -6,7 +6,7 @@ WORKDIR /packages
 #
 # Install the select packages from the opsbots package manager image
 # Repo: <https://github.com/opsbots/packages>
-ARG PACKAGES="antibody cfssl cfssljson direnv fzf gomplate pandoc"
+ARG PACKAGES="antibody aws-vault cfssl cfssljson direnv fzf gomplate pandoc"
 ENV PACKAGES=${PACKAGES}
 # RUN make dist(packages aren't written to usr/local/bin)
 RUN mkdir -p /dist \

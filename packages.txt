@@ -1,8 +1,11 @@
 bash
+curl
 fzf-zsh-completion
 git
 man-db@community
 make
+ncurses
+oath-toolkit-oathtool@community
 openssh-client
 openssl
 python3

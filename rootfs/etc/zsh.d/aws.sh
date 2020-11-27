@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-AWS_DATA_PATH=/localhost/.aws
+export AWS_DATA_PATH=${AWS_DATA_PATH:-/localhost/.aws}
 
 # Install autocompletion rules
 if which aws_completer >/dev/null
