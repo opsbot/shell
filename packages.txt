@@ -1,4 +1,5 @@
 git
+make
 python3
 syslog-ng
 zsh
