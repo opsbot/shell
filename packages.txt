@@ -1,5 +1,7 @@
 git
 make
+openssh-client
+openssl
 python3
 syslog-ng
 zsh
