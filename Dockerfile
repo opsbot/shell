@@ -3,15 +3,13 @@
 FROM opsbot/packages:latest as packages
 WORKDIR /packages
 
-#
-# Install the select packages from the opsbots package manager image
-# Repo: <https://github.com/opsbots/packages>
-ARG PACKAGES="antibody aws-vault cfssl cfssljson direnv fzf gomplate goofys pandoc"
-ENV PACKAGES=${PACKAGES}
+# copy apk packages manifest
+COPY packages/opsbot.txt /dist.txt
+
 # RUN make dist(packages aren't written to usr/local/bin)
 RUN mkdir -p /dist \
   && cd /packages/bin \
-  && cp -a $PACKAGES /dist
+  && cp -a $(grep -v '^#' /dist.txt) /dist
 
 
 #
@@ -66,7 +64,7 @@ RUN sed -i 's|http://dl-cdn.alpinelinux.org|https://alpine.global.ssl.fastly.net
   echo "@testing https://alpine.global.ssl.fastly.net/alpine/edge/testing" >> /etc/apk/repositories
 
 # copy apk packages manifest
-COPY packages.txt /etc/apk/packages.txt
+COPY packages/alpine.txt /etc/apk/packages.txt
 
 # install apk packages from manifest
 RUN apk update && \
