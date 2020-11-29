@@ -1,7 +1,8 @@
 bash
 curl
-fzf-zsh-completion
+figurine@cloudposse
 fuse
+fzf-zsh-completion
 git
 go
 kubectl-1.16@cloudposse
