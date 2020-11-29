@@ -73,6 +73,23 @@ RUN apk update && \
   apk add --no-cache $(grep -v '^#' /etc/apk/packages.txt) && \
   rm -f /tmp/* /etc/apk/cache/*
 
+# install tfenv and recent versions of terraform
+RUN git clone https://github.com/tfutils/tfenv.git ~/.tfenv \
+  && ln -s ~/.tfenv/bin/* /usr/local/bin \
+  && tfenv install 0.12.29 \
+  && tfenv install 0.13.5 \
+  && tfenv install 0.14.0-rc1 \
+  && tfenv use 0.12.29
+
+# install tgenv and recent versions of terragrunt
+RUN git clone https://github.com/cunymatthieu/tgenv.git ~/.tgenv \
+  && ln -s ~/.tgenv/bin/* /usr/local/bin \
+  && tgenv install 0.23.40 \
+  && tgenv install 0.24.4 \
+  && tgenv install 0.25.5 \
+  && tgenv install 0.26.7 \
+  && tgenv use 0.23.40
+
 RUN ln -s /usr/bin/python3 /usr/bin/python
 
 # Copy dist folder from packages builder

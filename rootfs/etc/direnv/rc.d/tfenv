@@ -7,6 +7,8 @@
 #
 
 use_tfenv() {
+  return 0
+
 	# Export terraform environent
 	eval "$(tfenv)"
 }

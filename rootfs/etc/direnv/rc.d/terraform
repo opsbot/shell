@@ -8,6 +8,8 @@
 #
 
 use_terraform() {
+  return 0
+
 	local version="$1"
 
 	if [ -n "${version}" ]

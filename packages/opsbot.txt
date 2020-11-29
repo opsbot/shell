@@ -86,7 +86,6 @@ terraform-inventory
 terraform-provider-mailgunv3
 terragrunt
 terrahelp
-tfenv
 tfmask
 vault
 vendir
