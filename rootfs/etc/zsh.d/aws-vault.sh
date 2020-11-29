@@ -45,7 +45,6 @@ _validate_aws_vault_server() {
 	elif [[ $curl_exit_code -eq 7 ]] || [[ $curl_exit_code -eq 28 ]]
   then
 		echo "* $(green "assume-role") will start EC2 metadata service at $(green "http://169.254.169.254/latest")"
-		AWS_VAULT_ARGS+=("--server")
 		# 22 = HTTP page not retrieved (e.g. status 404), 52 = Empty reply,
 		# 124 = timeout exceeded (implies TCP connection succeeded)
 	elif [[ $curl_exit_code -eq 22 ]] || [[ $curl_exit_code -eq 52 ]] || [[ $curl_exit_code -eq 122 ]]
@@ -67,7 +66,6 @@ _force_start_aws_vault_server() {
 	if disown $aws_vault_server_pid 2>/dev/null
   then
 		echo $(green "aws-vault server started at PID $aws_vault_server_pid")
-		AWS_VAULT_ARGS+=("--server")
 	else
 		echo $(red "Failed to start aws-vault server, forcing non-sever mode")
 		export AWS_VAULT_SERVER_ENABLED="failed to start"
@@ -267,6 +265,8 @@ then
 
 	# Start a shell or run a command with an assumed role
 	_aws_vault_assume_role() {
+    AWS_VAULT_ARGS=()
+
 		# Do not allow nested roles
 		if [ -n "${AWS_VAULT}" ]
     then
@@ -300,6 +300,8 @@ then
 			return 1
 		fi
 
+    [ "$AWS_VAULT_SERVER_ENABLED" = "true" ] && AWS_VAULT_ARGS+=("--server")
+
     # if mfa profile var is set autogenerate mfa token
     [ -z "$AWS_MFA_PROFILE" ] || AWS_VAULT_ARGS+=("--mfa-token=$(mfa "$AWS_MFA_PROFILE")")
 
@@ -322,9 +324,9 @@ then
 	}
 
 	role-server() {
-		if [[ ${AWS_VAULT_SERVER_ENABLED} != "true" ]]
+		if [[ "${AWS_VAULT_SERVER_ENABLED}" != "true" ]]
     then
-			echo $(red Not starting role server becuase AWS_VAULT_SERVER_ENABLED is "$AWS_VAULT_SERVER_ENABLED")
+			echo $(red "Not starting role server becuase AWS_VAULT_SERVER_ENABLED is \"$AWS_VAULT_SERVER_ENABLED\"")
 			exit 99
 		fi
 
@@ -335,5 +337,4 @@ then
 		[[ ${AWS_VAULT_ARGS[*]} =~ --debug ]] || AWS_VAULT_ARGS+=("--debug")
 		_aws_vault_assume_role "${1:-$(choose_role)}" sleep inf
 	}
-
 fi

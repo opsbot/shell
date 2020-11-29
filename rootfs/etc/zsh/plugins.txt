@@ -2,6 +2,9 @@
 # https://github.com/russelltsherman/zsh-direnv
 russelltsherman/zsh-direnv
 
+# https://github.com/russelltsherman/zsh-spaceship-prompt
+russelltsherman/zsh-spaceship-prompt
+
 # Fish-like autosuggestions for zsh
 # https://github.com/zsh-users/zsh-autosuggestions
 zsh-users/zsh-autosuggestions
