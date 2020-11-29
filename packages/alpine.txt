@@ -13,6 +13,8 @@ kubectl-1.19@cloudposse
 man-db@community
 make
 ncurses
+neovim
+nodejs
 oath-toolkit-oathtool@community
 openssh-client
 openssl
@@ -20,5 +22,6 @@ python3
 syslog-ng
 variant@cloudposse
 variant2@cloudposse
+yarn
 zsh
 zsh-vcs

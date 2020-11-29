@@ -90,6 +90,12 @@ RUN git clone https://github.com/cunymatthieu/tgenv.git ~/.tgenv \
   && tgenv install 0.26.7 \
   && tgenv use 0.23.40
 
+# install neovim configuration
+RUN git clone https://github.com/russelltsherman/vim ~/.vim \
+  && ln -sv ~/.vim/nvim/ $XDG_CONFIG_HOME \
+  && ln -sv /usr/bin/nvim /usr/bin/vim \
+  && (nvim -c PlugInstall; exit 0)
+
 RUN ln -s /usr/bin/python3 /usr/bin/python
 
 # Copy dist folder from packages builder
