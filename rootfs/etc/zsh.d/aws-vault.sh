@@ -18,7 +18,7 @@ export AWS_VAULT_SESSION_TTL="${AWS_VAULT_SESSION_TTL:-12h}"
 # export AWS_VAULT_FILE_PASSPHRASE="${AWS_VAULT_FILE_PASSPHRASE}"
 DOCKER_TIME_DRIFT_FIX="${DOCKER_TIME_DRIFT_FIX:-false}"
 
-[ "file" = "${AWS_VAULT_BACKEND}" ] || die "Geodesic only supports AWS_VAULT_BACKEND=file"
+[ "file" = "${AWS_VAULT_BACKEND}" ] || die "AWS_VAULT_BACKEND=file is the only supported option"
 
 _validate_aws_vault_server() {
 	[[ $AWS_VAULT_SERVER_ENABLED -eq "false" ]] || return 0
@@ -187,7 +187,8 @@ then
     then
 			if [[ -n $AWS_ASSUME_ROLE_TTL ]]
       then
-				echo "* $(red "aws-vault: overriding AWS_ASSUME_ROLE_TTL (${AWS_ASSUME_ROLE_TTL}) with AWS_VAULT_ASSUME_ROLE_TTL (${AWS_VAULT_ASSUME_ROLE_TTL})")"
+        :
+				# echo "* $(red "aws-vault: overriding AWS_ASSUME_ROLE_TTL (${AWS_ASSUME_ROLE_TTL}) with AWS_VAULT_ASSUME_ROLE_TTL (${AWS_VAULT_ASSUME_ROLE_TTL})")"
 			fi
 			export AWS_ASSUME_ROLE_TTL=${AWS_VAULT_ASSUME_ROLE_TTL}
 		fi
@@ -199,19 +200,22 @@ then
 				# AWS_VAULT_SESSION_TTL takes priority
 				if [[ -n $AWS_SESSION_TOKEN_TTL ]]
         then
-					echo "* $(red "aws-vault: overriding AWS_SESSION_TOKEN_TTL (${AWS_SESSION_TOKEN_TTL}) with AWS_VAULT_SESSION_TTL (${AWS_VAULT_SESSION_TTL})")"
+          :
+					# echo "* $(red "aws-vault: overriding AWS_SESSION_TOKEN_TTL (${AWS_SESSION_TOKEN_TTL}) with AWS_VAULT_SESSION_TTL (${AWS_VAULT_SESSION_TTL})")"
 				fi
 				export AWS_SESSION_TOKEN_TTL=${AWS_VAULT_SESSION_TTL}
 			elif [[ -z $AWS_SESSION_TOKEN_TTL ]] && [[ -n $AWS_SESSION_TTL ]]
       then
-				echo "* $(green "aws-vault: copying version 4 AWS_SESSION_TTL (${AWS_SESSION_TTL}) to version 5 variable AWS_SESSION_TOKEN_TTL")"
+        :
+				# echo "* $(green "aws-vault: copying version 4 AWS_SESSION_TTL (${AWS_SESSION_TTL}) to version 5 variable AWS_SESSION_TOKEN_TTL")"
 				export AWS_SESSION_TOKEN_TTL=${AWS_SESSION_TTL}
 			fi
 			if [[ -n $AWS_VAULT_CHAINED_SESSION_TOKEN_TTL ]]
       then
 				if [[ -n $AWS_CHAINED_SESSION_TOKEN_TTL ]]
         then
-					echo "* $(red "aws-vault: overriding AWS_CHAINED_SESSION_TOKEN_TTL (${AWS_CHAINED_SESSION_TOKEN_TTL}) with AWS_VAULT_CHAINED_SESSION_TOKEN_TTL (${AWS_VAULT_CHAINED_SESSION_TOKEN_TTL})")"
+          :
+					# echo "* $(red "aws-vault: overriding AWS_CHAINED_SESSION_TOKEN_TTL (${AWS_CHAINED_SESSION_TOKEN_TTL}) with AWS_VAULT_CHAINED_SESSION_TOKEN_TTL (${AWS_VAULT_CHAINED_SESSION_TOKEN_TTL})")"
 					export AWS_CHAINED_SESSION_TOKEN_TTL=${AWS_VAULT_CHAINED_SESSION_TOKEN_TTL}
 				fi
 			fi
@@ -221,7 +225,8 @@ then
 			# AWS_VAULT_SESSION_TTL takes priority
 			if [[ -n AWS_SESSION_TTL ]]
       then
-				echo "* $(red "aws-vault: overriding AWS_SESSION_TTL (${AWS_SESSION_TTL}) with AWS_VAULT_SESSION_TTL (${AWS_VAULT_SESSION_TTL})")"
+        :
+				# echo "* $(red "aws-vault: overriding AWS_SESSION_TTL (${AWS_SESSION_TTL}) with AWS_VAULT_SESSION_TTL (${AWS_VAULT_SESSION_TTL})")"
 			fi
 			export AWS_SESSION_TTL=${AWS_VAULT_SESSION_TTL}
 		fi
