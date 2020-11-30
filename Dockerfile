@@ -104,7 +104,7 @@ RUN git clone https://github.com/cunymatthieu/tgenv.git ~/.tgenv \
 RUN git clone https://github.com/russelltsherman/vim ~/.vim \
   && ln -sv ~/.vim/nvim/ $XDG_CONFIG_HOME \
   && ln -sv /usr/bin/nvim /usr/bin/vim \
-  && (nvim -c PlugInstall; exit 0)
+  && (nvim -c PlugInstall 2>&1 > /dev/null; exit 0)
 
 # install zsh configuration
 RUN git clone https://github.com/russelltsherman/zsh.git ~/zsh \
