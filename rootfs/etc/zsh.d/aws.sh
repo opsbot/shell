@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 
 export AWS_DATA_PATH=${AWS_DATA_PATH:-/localhost/.aws}
 

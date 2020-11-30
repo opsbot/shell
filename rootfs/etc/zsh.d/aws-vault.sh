@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 
 ASSUME_ROLE_INTERACTIVE="${ASSUME_ROLE_INTERACTIVE:-true}"
 

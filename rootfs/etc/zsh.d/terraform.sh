@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 update_terraform_prompt() {
 	[[ ${GEODESIC_TF_PROMPT_ENABLED:-false} == "true" ]] || return 0

@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 # Files in the profile.d directory are executed by the lexicographical order of their file names.
 # This file is named Ω_finalize.sh. The leading Ω (Capital Greek Omega) is needed to ensure this file executes after

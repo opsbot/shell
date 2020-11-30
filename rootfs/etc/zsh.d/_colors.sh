@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 # Files in the profile.d directory are executed by the lexicographical order of their file names.
 # This file is named _colors.sh. The leading underscore is needed to ensure this file executes before

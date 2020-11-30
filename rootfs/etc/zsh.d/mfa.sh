@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 export MFA_DATA_PATH="${MFA_DATA_PATH:-/localhost/.config/mfa}"
 

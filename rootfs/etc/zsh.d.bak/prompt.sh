@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 
 # Cache the current screen size
 export SCREEN_SIZE="${LINES}x${COLUMNS}"
