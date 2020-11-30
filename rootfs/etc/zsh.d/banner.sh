@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 COLOR_RESET="[0m"
 BANNER_COMMAND="${BANNER_COMMAND:-figurine}"
@@ -8,7 +8,7 @@ BANNER_FONT="${BANNER_FONT:-Nancyj.flf}"
 
 if [ "${SHLVL}" = "1" ]; then
 	# Display a banner message for interactive shells (if we're not in aws-vault or aws-okta)
-	(source /etc/os-release && printf "# Geodeisc based on %s\n\n" "$PRETTY_NAME")
+	(source /etc/os-release && printf "# Opsbot Shell based on %s\n\n" "$PRETTY_NAME")
 	if [ -n "${BANNER}" ]; then
 		if [ "$BANNER_COMMAND" = "figlet" ]; then
 			echo "${BANNER_COLOR}"
