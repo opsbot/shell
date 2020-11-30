@@ -64,6 +64,8 @@ ENV ZDOTDEEDIR /etc/zsh.d
 # set zsh cache directory
 ENV ZDOTCACHEDIR="${XDG_CACHE_HOME}/zsh"
 
+ENV GITHUB_TOKEN_FILE=/localhost/.github_token
+
 # add cloudposse apk repository
 ADD https://apk.cloudposse.com/ops@cloudposse.com.rsa.pub /etc/apk/keys/
 RUN echo "@cloudposse https://apk.cloudposse.com/3.12/vendor" >> /etc/apk/repositories
