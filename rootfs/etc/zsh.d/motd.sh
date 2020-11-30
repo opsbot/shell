@@ -1,7 +1,6 @@
 #!/usr/bin/env sh
 
 if [ -z "${ASSUME_ROLE}" ]; then
-
   # show motd from /etc/motd
   # IMPORTANT:
   # * Your $HOME directory has been mounted to `/localhost`

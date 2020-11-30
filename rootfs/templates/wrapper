@@ -199,13 +199,13 @@ function use() {
 		echo "# Attaching to existing ${DOCKER_NAME} session ($container_id)"
 		if [ $# -eq 0 ]
     then
-			set -- "/bin/zsh" "-i" "$@"
+			set -- "/bin/zsh" "-l" "$@"
 		fi
 		docker exec -it "${DOCKER_NAME}" $*
 	else
 		echo "# Starting new ${DOCKER_NAME} session from ${DOCKER_IMAGE}"
 		echo "# Exposing port ${GEODESIC_PORT}"
-		docker run "${DOCKER_ARGS[@]}" ${DOCKER_IMAGE} /bin/zsh -i $*
+		docker run "${DOCKER_ARGS[@]}" ${DOCKER_IMAGE} /bin/zsh -l $*
 	fi
 }
 

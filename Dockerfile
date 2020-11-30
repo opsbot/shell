@@ -53,8 +53,16 @@ ENV SHELL /bin/zsh
 # This is not a "multi-user" system, so we'll use `/etc` as the global configuration dir
 # Read more: <https://wiki.archlinux.org/index.php/XDG_Base_Directory>
 ENV XDG_CONFIG_HOME=/etc
-# set zsh root dir in etc/zsh
+# place XDG_CACHE on localhost volume for persistence
+ENV XDG_CACHE_HOME=/localhost/.cache/opsbot
+# place XDG_DATA on localhost volume for persistence
+ENV XDG_DATA_HOME=/localhost/.data/opsbot
+# set zsh configuration dir to etc/zsh
 ENV ZDOTDIR /etc/zsh
+# set zsh.d directory to /etc/zsh.d
+ENV ZDOTDEEDIR /etc/zsh.d
+# set zsh cache directory
+ENV ZDOTCACHEDIR="${XDG_CACHE_HOME}/zsh"
 
 # add cloudposse apk repository
 ADD https://apk.cloudposse.com/ops@cloudposse.com.rsa.pub /etc/apk/keys/
@@ -95,6 +103,12 @@ RUN git clone https://github.com/russelltsherman/vim ~/.vim \
   && ln -sv ~/.vim/nvim/ $XDG_CONFIG_HOME \
   && ln -sv /usr/bin/nvim /usr/bin/vim \
   && (nvim -c PlugInstall; exit 0)
+
+# install zsh configuration
+RUN git clone https://github.com/russelltsherman/zsh.git ~/zsh \
+  && rm -rf /etc/zsh \
+  && ln -sv ~/zsh/zsh /etc \
+  && ln -sv ~/zsh/zsh/.zshenv /etc/zshenv
 
 RUN ln -s /usr/bin/python3 /usr/bin/python
 
