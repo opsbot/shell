@@ -1,5 +1,4 @@
 antibody
-assume-role
 awless
 aws-okta
 aws-vault
@@ -13,8 +12,6 @@ ctop
 direnv
 email
 fzf
-gh
-ghr
 github-commenter
 github-release
 github-repo-metadata
@@ -39,7 +36,6 @@ jx
 k3d
 k6
 k9s
-katafygio
 kfctl
 kind
 krew
@@ -54,21 +50,15 @@ migrate
 minikube
 misspell
 mkbundle
-multirootca
 nomad
 opa
 pack
 package-filter
 packer
 pandoc
-pgmetrics
 pluto
 popeye
-promtool
-rakkess
-rbac-lookup
 retry
-rice
 saml2aws
 scenery
 semver
@@ -77,7 +67,6 @@ sentry-cli
 shellcheck
 shfmt
 slack-notifier
-sops
 stern
 sudosh
 terraform-config-inspect
